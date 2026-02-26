@@ -1,0 +1,52 @@
+using System.Collections;
+using UnityEngine;
+
+public class projectileFire : MonoBehaviour
+{
+    public bool IsAvailable;
+    public float CooldownDuration;
+    public Rigidbody2D fumes;
+    public Transform launchOffset;
+
+    private void Start()
+    {
+        IsAvailable = true;
+    }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.F))
+        {
+            UseAbility();
+        }
+    }
+
+    void Fire()
+    {
+        Instantiate(fumes, launchOffset.position, transform.rotation);
+    }
+
+    void UseAbility()
+    {
+
+        if (IsAvailable == false)
+        {
+            return;
+        }
+        else if (IsAvailable == true)
+        {
+            Fire();
+        }
+
+        StartCoroutine(StartCooldown());
+    }
+    public IEnumerator StartCooldown()
+    {
+        IsAvailable = false;
+
+        yield return new WaitForSeconds(CooldownDuration);
+
+        IsAvailable = true;
+    }
+
+}
