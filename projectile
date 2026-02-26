@@ -1,0 +1,44 @@
+using UnityEngine;
+
+public class projectile : MonoBehaviour
+{
+    public float Speed = 4.5f;
+    public float existenceTimer;
+
+    private void Start()
+    {
+        despawn();
+    }
+    private void Update()
+    {
+        
+       transform.position += transform.right * Time.deltaTime * Speed;
+
+        despawn();
+
+        if(existenceTimer<0)
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
+    public void despawn()
+    {
+        existenceTimer -= Time.deltaTime;
+
+
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(gameObject.tag=="Enemy")
+        {
+            Destroy(gameObject);
+        }
+    }
+}
+
+
+
+
